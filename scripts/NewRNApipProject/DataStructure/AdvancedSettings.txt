@@ -6,18 +6,9 @@
 #
 # Remote Server
 #
-# Bwa.removePCRdup	=	"1"
-# Bwa.makeUniqueRead	=	"1"
-# Bwa.maxEditDist	=	"1"
-# Tophat.command.opt	=	"--bowtie1 --no-mixed --no-discordant -g 1 -p 4 -G"
-#
-# Filter.splitbychr	=	"1"
-# Filter.enforceinssize	=	"0"
-# Filter.minisize	=	"100"
-# Filter.maxisize	=	"800"
-#
-# PeakCaller.fdr	=	"0.01"
-# PeakCaller.posopt	=	"1"
-# PeakCaller.densityopt	=	"1"
+# Filter.removePCRdup	=	"1"
+# Filter.makeUniqueRead	=	"1"
+# Filter.maxEditDist	=	"1"
+# Align.command.opt	=	"/usr/local/bin/tophat2.4 --bowtie1 --no-mixed --no-discordant -g 1 -p 4 -G"
 #
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-|

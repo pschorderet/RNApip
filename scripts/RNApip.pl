@@ -24,7 +24,7 @@ else{ die "\n\n----------------------------------------\n\n Provide the path whe
 my $Targets = "$path2expFolder/DataStructure/Targets.txt";
 open(INPUT, $Targets) || die "Error opening $Targets : $!\n\n\n";
 
-my ($expFolder, $genome, $userFolder, $path2RNAseqScripts, $path2RNAseq, $path2fastqgz, $chrlens, $path2gtfFile, $path2TophatSoftware) 		= ("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA");
+my ($expFolder, $genome, $userFolder, $path2RNAseqScripts, $path2RNAseq, $path2fastqgz, $chrlens, $path2gtfFile)	 			= ("NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA");
 my ($unzip, $qc, $map, $filter)															= ("FALSE", "FALSE", "FALSE", "FALSE", "FALSE");
 my (@sc, @lines2remove)																= ();
 # Find paths to different folders in the Targets.txt file
@@ -70,10 +70,6 @@ while(<INPUT>) {
                 $_ =~ m/"(.+?)"/;
                 $PE = "$1";
         }
-	if (/# Path_to_TophatSoft/) {
-		$_ =~ m/"(.+?)"/;
-		$path2TophatSoftware = "$1";
-	}
 	if (/# Steps_to_execute/) {
 		$_ =~ m/"(.+?)"/;
         	@steps2execute = ();
@@ -90,25 +86,25 @@ while(<INPUT>) {
 my $AdvSettings = "$path2expFolder/DataStructure/AdvancedSettings.txt";
 open(INPUT, $AdvSettings) || die "Error opening $AdvSettings : $!\n\n\n";
 
-my ($removepcrdup, $makeunique, $ndiff, $fdr, $posopt, $densityopt, $enforceisize)	= ("NA", "NA", "NA", "NA", "NA", "NA", "NA");
+my ($removepcrdup, $makeunique, $ndiff, $aligncommand)				= ("NA", "NA", "NA", "NA", "NA", "NA", "NA");
 
 while(<INPUT>) {
 
-	if (/# Bwa.removePCRdup/) {
+	if (/# Filter.removePCRdup/) {
 		$_ =~ m/"(.+?)"/;
 		$removepcr = "$1";
 	}
-	if (/# Bwa.makeUniqueRead/) {
+	if (/# Filter.makeUniqueRead/) {
 		$_ =~ m/"(.+?)"/;
 		$makeunique = "$1";
 	}
-	if (/# Bwa.maxEditDist/) {
+	if (/# Filter.maxEditDist/) {
 		$_ =~ m/"(.+?)"/;
 		$ndiff = "$1";
 	}
-	if (/# Tophat.command.opt/) {
+	if (/# Align.command.opt/) {
                 $_ =~ m/"(.+?)"/;
-                $Tophatcommandopt = "$1";
+                $aligncommand = "$1";
         }
 
 } # end of AdvancedSettings.txt
@@ -146,7 +142,7 @@ print "\n chrlens:\t\t $chrlens";
 print "\n refGenome:\t\t $refGenome";
 print "\n";
 print "\n Paired end sequencing:\t $PE";
-print "\n Tophat.command.opt:\t $Tophatcommandopt";
+print "\n Align command (adv.set.):\t $aligncommand";
 print "\n Remove pcr dupl:\t $removepcr";
 print "\n Make unique reads:\t $makeunique";
 print "\n";
@@ -410,27 +406,16 @@ if( $map =~ "TRUE" ){
 		if( $PE ) {
 			#-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 			#-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+          IMPORTANT CODE HERE         -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-	#		if( $Tophatcommandopt != "--bowtie1 --no-mixed --no-discordant -g 1 -p 4 -G"){
-	#			my $cmd         = "$path2TophatSoftware $Tophatcommandopt $path2gtfFile -o $path2Tophat/$samples[$i] $refGenome/$genome $path2fastq/$samples[$i]\_R1.fastq $path2fastq/$samples[$i]\_R2.fastq";
-	#			
-	#			`echo "$cmd" >> $QSUBint`;
-	#		} esle {
-				my $cmd		= "$path2TophatSoftware --bowtie1 --no-mixed --no-discordant -g 1 -p 4 -G $path2gtfFile -o $path2Tophat/$samples[$i] $refGenome/$genome $path2fastq/$samples[$i]\_R1.fastq $path2fastq/$samples[$i]\_R2.fastq";
-				`echo "$cmd" >> $QSUBint`;
-	#		}
+			my $cmd		= "$aligncommand $path2gtfFile -o $path2Tophat/$samples[$i] $refGenome/$genome $path2fastq/$samples[$i]\_R1.fastq $path2fastq/$samples[$i]\_R2.fastq";
+			`echo "$cmd" >> $QSUBint`;
 			#--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--			
 
 		} else {
 			
 			#-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 			#-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+          IMPORTANT CODE HERE         -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-	#		if( $Tophatcommandopt != "--bowtie1 --no-mixed --no-discordant -g 1 -p 4 -G"){
-	#			my $cmd		= "$path2TophatSoftware $Tophatcommandopt $path2gtfFile -o $path2Tophat/$samples[$i] $refGenome/$genome $path2fastq/$samples[$i].fastq";
-	#			`echo "$cmd" >> $QSUBint`;
-        #		} esle {
-				my $cmd		= "$path2TophatSoftware --bowtie1 --no-mixed --no-discordant -g 1 -p 4 -G $path2gtfFile -o $path2Tophat/$samples[$i] $refGenome/$genome $path2fastq/$samples[$i].fastq";
-				`echo "$cmd" >> $QSUBint`;
-	#		}
+			my $cmd		= "$aligncommand $path2gtfFile -o $path2Tophat/$samples[$i] $refGenome/$genome $path2fastq/$samples[$i].fastq";
+			`echo "$cmd" >> $QSUBint`;
 			#--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--
 
 		}
