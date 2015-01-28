@@ -16,7 +16,7 @@
 # Path_to_chrLens.dat	=	"/data/schorderet/reference_files/mm9/chr_lens.dat"
 # Path_to_RefGen.fa	=	"/data/ergun/ref/mm9/bowtie/"
 # Path_to_gtfFile	=	"/data/ergun/ref/mm9/mm9_gtf/Mus_musculus.NCBIM37.67.allchr.gtf";
-# Paired_end_run	=	"1"
+# Paired_end_run	=	"0"
 # Path_to_TophatSoft	=	"/usr/local/bin/tophat2.4"
 #
 # Steps_to_execute	=	" unzip + qc + map + filter "
