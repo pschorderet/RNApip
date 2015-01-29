@@ -156,6 +156,12 @@ print "\n qc:\t\t\t $qc";
 print "\n map:\t\t\t $map";
 print "\n filter:\t\t $filter";
 print "\n .........................................";
+print "\n";
+print "\n Samples: ";
+foreach my $i (0 .. $#samples) {
+        print "\n\t $samples[$i]";
+}
+print "\n";
 #print "\n";
 #print "\n----------------------------------------\n";
 

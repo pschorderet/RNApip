@@ -167,8 +167,8 @@ print "\n Align command: \t $aligncommand";
 print "\n Remove pcr dupl:\t $removepcr";
 print "\n Make unique reads:\t $makeunique";
 print "\n";
-print "\n Current working dir:\t $path2expFolder";
-print "\n";
+#print "\n Current working dir:\t $path2expFolder";
+#print "\n";
 print "\n .........................................";
 print "\n Performing following tasks:";
 print "\n .........................................";
@@ -180,8 +180,9 @@ print "\n .........................................";
 print "\n";
 print "\n Samples: ";
 foreach my $i (0 .. $#samples) {
-        print "\n\t $samples[$i] \t - \t $inpus[$i]";
+        print "\n\t $samples[$i]";
 }
+print "\n";
 #print "\n----------------------------------------\n";
 
 
