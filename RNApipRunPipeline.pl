@@ -110,11 +110,34 @@ while(<INPUT>) {
 } # end of AdvancedSettings.txt
 
 
+
+#*----------------------------------------------------------------------*
+# Parse the Targets.txt file and find unique sample names of FileName and InpName
+
+my @Targets1 = `cut -f1 $Targets`;
+        chomp(@Targets1);
+my @Targets2 = `cut -f2 $Targets`;
+        chomp(@Targets2);
+
+# Store original file names in orisamples
+my @orisamples;
+foreach $line (@Targets1) {
+        $line =~ /^$/ and die "Targets 1: Blank line detected at $.\n\n";
+        $line =~ /^[# = " OriFileName FileName OriInpName InpName]/ and next;
+        push(@orisamples, $line);
+}
+my @samples;
+foreach $line (@Targets2) {
+        $line =~ /^$/ and die "Targets 1: Blank line detected at $.\n\n";
+        $line =~ /^[# = " OriFileName FileName OriInpName InpName]/ and next;
+        push(@samples, $line);
+}
+
 #*----------------------------------------------------------------------*
 # Define paths
 
-my $path2expFolder = "$userFolder/$expFolder";
-$Targets = "$path2expFolder/DataStructure/Targets.txt";
+my $path2expFolder	= "$userFolder/$expFolder";
+$Targets		= "$path2expFolder/DataStructure/Targets.txt";
 
 #*----------------------------------------------------------------------*
 
@@ -140,7 +163,7 @@ print "\n chrlens:\t\t $chrlens";
 print "\n refGenome:\t\t $refGenome";
 print "\n";
 print "\n Paired end sequencing:\t $PE";
-print "\n Align command (adv.set.):\t $aligncommand";
+print "\n Align command: \t $aligncommand";
 print "\n Remove pcr dupl:\t $removepcr";
 print "\n Make unique reads:\t $makeunique";
 print "\n";
@@ -154,7 +177,11 @@ print "\n qc:\t\t\t $qc";
 print "\n map:\t\t\t $map";
 print "\n filter:\t\t $filter";
 print "\n .........................................";
-#print "\n";
+print "\n";
+print "\n Samples: ";
+foreach my $i (0 .. $#samples) {
+        print "\n\t $samples[$i] \t - \t $inpus[$i]";
+}
 #print "\n----------------------------------------\n";
 
 

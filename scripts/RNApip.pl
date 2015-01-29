@@ -142,7 +142,7 @@ print "\n chrlens:\t\t $chrlens";
 print "\n refGenome:\t\t $refGenome";
 print "\n";
 print "\n Paired end sequencing:\t $PE";
-print "\n Align command (adv.set.):\t $aligncommand";
+print "\n Align command: \t $aligncommand";
 print "\n Remove pcr dupl:\t $removepcr";
 print "\n Make unique reads:\t $makeunique";
 print "\n";
@@ -238,8 +238,11 @@ if( $unzip =~ "TRUE" ){
 	`chmod 777 $QSUB`;
         print "\n Store all of the following '$myJobName' jobs in $QSUB \n";
         my @myJobs;
-
+	
+	print "\n\n-------------------------------------\n\n Unzipping samples: ";
 	foreach my $i (0 .. $#samples) {
+		
+		print "\n\t $orisamples[$i] \t $samples[$i] ";		
 
 		# Prepare a personal qsub script
 		my $QSUBint  = "$tmpscr/$myJobName/$samples[$i]\_$myJobName\.sh";
@@ -247,7 +250,7 @@ if( $unzip =~ "TRUE" ){
 
 		my $cmd		= "gunzip -c $path2fastqgz/$orisamples[$i]\.fastq\.gz > $path2fastq/$samples[$i]\.fastq";
 		`echo "$cmd" >> $QSUBint`;
-	
+		
 		#---------------------------------------------
 		# Keep track of the jobs in @myJobs
 		my $jobName	= "Sample_$myJobName$i";
@@ -392,8 +395,11 @@ if( $map =~ "TRUE" ){
 	#*----------------------------------------------------------------------*
 	# Create a folder named * mysample * within each bwa_sam, bwa_saf and bwa_sai folders
 
+	print "\n\n-------------------------------------\n\n Mapping samples: ";
 	foreach my $i (0 .. $#samples) {
 		
+		print "\n\t $samples[$i] ";
+
 		# Prepare a personal qsub script
 		my $QSUBint		= "$tmpscr/$myJobName/$samples[$i]\_$myJobName\.sh";
 		`cp $scrhead $QSUBint`;
@@ -506,7 +512,11 @@ if( $filter =~ "TRUE" ){
 	print "\n Store all of the following '$myJobName' jobs in $QSUB \n";
 	my @myJobs;
 
+
+	print "\n\n-------------------------------------\n\n Filtering samples: ";
 	foreach my $i (0 .. $#samples) {
+
+		print "\n\t $samples[$i] ";
 
 		# Prepare a personal qsub script
 		my $QSUBint	= "$tmpscr/$myJobName/$samples[$i]\_$myJobName\.sh";
