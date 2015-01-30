@@ -66,6 +66,10 @@ while(<INPUT>) {
                 $_ =~ m/"(.+?)"/;
                 $path2gtfFile = "$1";
         }
+	if (/# Aligner_algorithm/) {
+                $_ =~ m/"(.+?)"/;
+                $aligner = "$1";
+        }
 	if (/# Paired_end_run/) {
                 $_ =~ m/"(.+?)"/;
                 $PE = "$1";
@@ -142,6 +146,7 @@ print "\n chrlens:\t\t $chrlens";
 print "\n refGenome:\t\t $refGenome";
 print "\n";
 print "\n Paired end sequencing:\t $PE";
+print "\n Aligner algorithm:\t $aligner";
 print "\n Align command: \t $aligncommand";
 print "\n Remove pcr dupl:\t $removepcr";
 print "\n Make unique reads:\t $makeunique";
