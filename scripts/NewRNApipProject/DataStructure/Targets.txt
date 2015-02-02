@@ -6,18 +6,17 @@
 #
 # Remote Server
 #
-# My_email	=	" your.email@harvard.edu "	
+# My_email	=	"your.email@harvard.edu"	
 #
-# My_project_title	=	" <MAIN_TITLE>"
-# Reference_genome	=	" mm9"
-# Path_to_proj_folder	=	" <PATH_TO_PROJECTFOLDER> "
-# Path_to_RNApip	=	" <PATH_TO_RNAPIP> "
-# Path_to_orifastq.gz	=	" <PATH_TO_RNAPIP>/scripts/testdata "
-# Path_to_chrLens.dat	=	" /data/schorderet/reference_files/mm9/chr_lens.dat "
-# Path_to_RefGen.fa	=	" /data/ergun/ref/mm9/bowtie/ "
-# Path_to_gtfFile	=	" /data/ergun/ref/mm9/mm9_gtf/Mus_musculus.NCBIM37.67.allchr.gtf ";
-# Aligner_algorithm     =	" Tophat "
-# Paired_end_run	=	" 0 "
+# My_project_title	=	"<MAIN_TITLE>"
+# Reference_genome	=	"mm9"
+# Path_to_proj_folder	=	"<PATH_TO_PROJECTFOLDER>"
+# Path_to_RNApip	=	"<PATH_TO_RNAPIP>"
+# Path_to_orifastq.gz	=	"/data/schorderet/RNApip/scripts/testdata"
+# Path_to_chrLens.dat	=	"/data/schorderet/reference_files/mm9/chr_lens.dat"
+# Path_to_RefGen.fa	=	"/data/ergun/ref/mm9/bowtie/"
+# Path_to_gtfFile	=	"/data/ergun/ref/mm9/mm9_gtf/Mus_musculus.NCBIM37.67.allchr.gtf";
+# Paired_end_run	=	"0"
 #
 # Steps_to_execute	=	" unzip + qc + map + filter "
 #
